@@ -30,14 +30,20 @@ body {
   
 }
 
-.row, .row-item-end {
+.row, .row-item-end, .column {
   display: flex;
   margin: 1rem 0 1rem 0;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .row-item-end {
   margin-bottom: 2rem !important;
+}
+
+.column {
+  flex-direction: column !important;
+  margin: 0;
 }
 
 .form-input {
@@ -49,13 +55,21 @@ body {
   padding: 8px;
 }
 
-input.form-input:focus {
+input.form-input:focus:is(:not(:invalid), :not(.dirty)) {
   outline-color: rgb(28, 164, 255) !important;
 }
 
+input.form-input.dirty:invalid,
+input.form-input.dirty:focus:invalid {
+  border-color: rgb(255, 28, 28) !important;
+  outline-color: rgb(255, 28, 28) !important;
+}
+
 .submit-button {
-  width: 6rem;
-  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
   border: 0px hidden;
   border-radius: 6px;
   background-color: rgb(54, 217, 0);
@@ -63,12 +77,22 @@ input.form-input:focus {
   cursor: pointer;
 }
 
-.submit-button:hover {
+.submit-button:hover:not(:disabled) {
   background-color: rgb(48, 193, 0);
 }
 
 .submit-button:focus {
   outline: 3px solid rgba(48, 193, 0, 0.30) !important;
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  background-color: rgb(54, 217, 0, 0.5);
+}
+
+.error-message {
+  display: none;
+  color: red;
 }
 
 ::-webkit-input-placeholder {
@@ -82,4 +106,19 @@ input.form-input:focus {
 }
 :-ms-input-placeholder {  
   font-style: italic; 
+}
+
+.loader {
+  margin-left: 6px;
+  width: 8px;
+  height: 8px;
+  border: 5px solid rgba(145, 145, 145, 0.3);
+  border-top: 5px solid rgb(28, 164, 255);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
